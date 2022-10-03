@@ -8,10 +8,6 @@ function App() {
   const [status, setStatus] = useState('all');
   const [filtered, setFiltered] = useState([]);
 
-  useEffect(() => {
-    filterHandler();
-  }, [todos, status]);
-
   const addTodoHandler = (text) => {
     setTodos([...todos, { body: text, completed: false, id: Date.now() }]);
   };
@@ -29,6 +25,10 @@ function App() {
         break;
     }
   };
+
+  useEffect(() => {
+    filterHandler();
+  }, [todos, status]);
 
   return (
     <div className="App">

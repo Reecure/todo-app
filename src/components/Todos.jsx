@@ -1,18 +1,27 @@
+import { useState } from 'react';
 import Todo from './Todo';
 import style from './Todos.module.css';
+import ActionButton from './UI/ActionButton';
 function Todos({ todos, setTodos, setStatus, filtered }) {
-  const allStatusHandler = () => {
-    setStatus('all');
+  const [active, setActive] = useState('All');
+
+  const actionToggleHandler = (e) => {
+    setActive(e);
   };
-  const activeStatusHandler = () => {
-    setStatus('uncompleted');
+
+  const statusHandler = (status) => {
+    setStatus(status);
   };
-  const completedStatusHandler = () => {
-    setStatus('completed');
-  };
+
   const clearCompletedHandler = () => {
     setTodos(todos.filter((item) => item.completed === false));
   };
+
+  const actionBtns = [
+    { id: 'All', title: 'All', status: 'all' },
+    { id: 'Active', title: 'Active', status: 'uncompleted' },
+    { id: 'Completed', title: 'Completed', status: 'completed' },
+  ];
 
   return (
     <div className={style.wrapper}>
@@ -23,9 +32,20 @@ function Todos({ todos, setTodos, setStatus, filtered }) {
       })}
       <div className={style.actions}>
         <p>{filtered.length} items left</p>
-        <button onClick={allStatusHandler}>All</button>
-        <button onClick={activeStatusHandler}>Active</button>
-        <button onClick={completedStatusHandler}>Completed</button>
+        {actionBtns.map((btn, i) => {
+          return (
+            <ActionButton
+              active={active}
+              setActive={actionToggleHandler}
+              id={btn.id}
+              key={i}
+              status={btn.status}
+              statusHandler={statusHandler}
+            >
+              {btn.title}
+            </ActionButton>
+          );
+        })}
         <button onClick={clearCompletedHandler}>Clear Completed</button>
       </div>
     </div>

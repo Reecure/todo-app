@@ -1,0 +1,9 @@
+.actionBtn {
+  background-color: unset;
+  border: none;
+  color: hsl(234, 11%, 52%);
+  cursor: pointer;
+}
+.activeButton {
+  font-weight: bold;
+}
